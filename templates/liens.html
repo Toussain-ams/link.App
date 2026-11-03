@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Liens enregistrés - Link App</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <a class="logo" href="{{ url_for('accueil') }}">
+            <span class="logo-mark">L</span> Link.App
+        </a>
+
+        <nav class="navigation">
+            <a href="{{ url_for('accueil') }}">Accueil</a>
+            <a href="{{ url_for('afficher_liens') }}" class="active">
+                Liens enregistrés
+            </a>
+        </nav>
+
+    </header>
+
+    <main class="container">
+
+        <section class="panel list-panel">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">VOTRE COLLECTION</p>
+                    <h2>Liens enregistrés
+                        <span class="count">{{ liens|length }}</span>
+                    </h2>
+                </div>
+            </div>
+            <button type="button" id="bouton-aleatoire">
+    🎲 lien aléatoire
+</button>
+
+<div id="resultat-aleatoire"></div>
+
+            {% if liens %}
+
+                <div class="links-list">
+
+                    {% for lien in liens %}
+
+                        <article class="link-card">
+
+                            <div class="link-symbol">↗</div>
+
+                            <div class="link-info">
+
+                                <h3>{{ lien.titre }}</h3>
+
+                                <a href="{{ lien.url }}"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    {{ lien.url }}
+                                </a>
+
+                                <div class="link-meta">
+
+                                    <span class="category">
+                                        {{ lien.categorie }}
+                                    </span>
+
+                                    <span>
+                                        Ajouté le {{ lien.date_ajout }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-state">
+                    <h3>Aucun lien enregistré</h3>
+                    <p>Ajoutez votre premier lien depuis l'accueil.</p>
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

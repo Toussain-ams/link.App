@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link.App — Bibliothèque de liens</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <a class="logo" href="{{ url_for('accueil') }}">
+        <span class="logo-mark">L</span> Link.App
+        </a>
+
+        <nav class="navigation">
+            <a href="{{ url_for('accueil') }}" class="active">Accueil</a>
+            <a href="{{ url_for('afficher_liens') }}">Liens enregistrés</a>
+         </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <p class="eyebrow">COLLECTION DE RESSOURCES</p>
+            <h1>Gardez vos meilleurs liens<br><span>à portée de main.</span></h1>
+            <p class="hero-text">Enregistrez, classez et retrouvez facilement les ressources partagées.</p>
+        </section>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for categorie_message, message in messages %}
+                    <div class="notice {{ categorie_message }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <section class="content-grid">
+            <section class="panel form-panel">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">NOUVELLE RESSOURCE</p>
+                        <h2>Ajouter un lien</h2>
+                    </div>
+                    <span class="heading-icon">＋</span>
+                </div>
+
+                <form action="{{ url_for('ajouter_lien') }}" method="POST" id="link-form">
+                    <label for="titre">Titre</label>
+                    <input type="text" id="titre" name="titre" placeholder="Ex. : Apprendre Python" maxlength="120" required>
+
+                    <label for="url">Adresse URL</label>
+                    <input type="url" id="url" name="url" placeholder="https://example.com" required>
+
+                    <label for="categorie">Catégorie</label>
+                    <select id="categorie" name="categorie" required>
+                        <option value="">Choisir une catégorie</option>
+                        <option>Divertissement</option>
+                        <option>Apprentissage</option>
+                        <option>programmation</option>
+                        <option>Intelligence artificielle</option>
+                        <option>humour</option>
+                        <option>Autre</option>
+                    </select>
+
+                    <p class="form-help">L'adresse doit commencer par http:// ou https://.</p>
+                    <button class="button primary full-width" type="submit">Enregistrer le lien <span>→</span></button>
+                </form>
+            
+        
+        </section>
+        <footer>Link.App <span>•</span> Projet pédagogique de développement web</footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
